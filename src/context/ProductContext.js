@@ -15,9 +15,21 @@ export function ProductProvider({ children }) {
 
     const addToCart = (product) => setCart([...cart, product]);
     const removeFromCart = (id) => setCart(cart.filter(item => item.id !== id));
+    const deleteProduct = (id) => setProducts(products.filter(product => product.id !== id));
+    const editProduct = (id, newTitle) => {
+        setProducts(products.map(product => 
+            product.id === id ? { ...product, title: newTitle } : product
+        ));
+    };
+    
+    const updateProduct = (id, updatedProduct) => {
+        setProducts(products.map(product => 
+            product.id === id ? { ...product, ...updatedProduct } : product
+        ));
+    };
 
     return (
-        <ProductContext.Provider value={{ products, cart, addToCart, removeFromCart }}>
+        <ProductContext.Provider value={{ products, cart, addToCart, removeFromCart, deleteProduct, editProduct, updateProduct }}>
             {children}
         </ProductContext.Provider>
     );
